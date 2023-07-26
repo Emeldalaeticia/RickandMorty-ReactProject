@@ -15,7 +15,7 @@ const Card = ({ page, results }) => { // Add 'page' prop here
           key={id}
           className="col-lg-4 col-md-6 col-sm-6 col-12 mb-4 position-relative text-dark"
         >
-          <div key={id} className="bg-white p-4 border border-blue-500 rounded-lg relative">
+          <div key={id} className="bg-slate-950 p-4 border border-blue-500 rounded-lg relative">
             <img className="w-full rounded-t-lg" src={image} alt="" />
             <div className="p-4">
               <div className="text-lg font-semibold mb-4">{name}</div>

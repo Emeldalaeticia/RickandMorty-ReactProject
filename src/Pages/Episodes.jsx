@@ -3,24 +3,27 @@ import Card from "../components/Card/Card";
 import InputGroup from "../components/InputGroup";
 
 const Episodes = () => {
-  let [results, setResults] = useState([]);
-  let [info, setInfo] = useState({});
-  let { air_date, episode, name } = info;
-  let [id, setID] = useState(1);
+  const [results, setResults] = useState([]);
+  const [info, setInfo] = useState({});
+  const { air_date, episode, name } = info;
+  const [id, setID] = useState(1);
 
-  let api = `https://rickandmortyapi.com/api/episode/${id}`;
+  const api = `https://rickandmortyapi.com/api/episode/${id}`;
 
   useEffect(() => {
     (async function () {
-      let data = await fetch(api).then((res) => res.json());
-      setInfo(data);
+      try {
+        const response = await fetch(api);
+        const data = await response.json();
+        setInfo(data);
 
-      let characters = await Promise.all(
-        data.characters.map((x) => {
-          return fetch(x).then((res) => res.json());
-        })
-      );
-      setResults(characters);
+        const characters = await Promise.all(
+          data.characters.map((character) => fetch(character).then((res) => res.json()))
+        );
+        setResults(characters);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     })();
   }, [api]);
 
@@ -28,7 +31,7 @@ const Episodes = () => {
     <div className="container">
       <div className="row mb-3">
         <h1 className="text-center mb-3">
-          Episode name: <span className="text-primary">{name || "Unknown"}</span>
+          Episode name : <span className="text-primary">{name || "Unknown"}</span>
         </h1>
         <h5 className="text-center">Air Date: {air_date || "Unknown"}</h5>
       </div>
